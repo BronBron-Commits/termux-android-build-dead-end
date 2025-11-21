@@ -1,6 +1,6 @@
 [workspace]
+resolver = "3"
+
 members = [
-    "uchat-zipalign",
-    "uchat-apksigner",
-    "uchat-builder"
+    "uchat-apksigner"
 ]

@@ -1,13 +1,10 @@
 [package]
 name = "uchat-apksigner"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
-anyhow = "1"
-zip = "0.6"
-sha1 = "0.10"
-base64 = "0.21"
-rcgen = "0.11"
-pem = "2"
-tempfile = "3.23.0"
+rsa = { version = "0.10.0-rc.10" }
+rand = "0.8"
+yasna = "0.5"
+digest = "0.11.0-rc.4"
