@@ -2,9 +2,9 @@
 name = "uchat-apksigner"
 version = "0.1.0"
 edition = "2024"
+build = "build.rs"
 
 [dependencies]
-rsa = { version = "0.10.0-rc.10" }
-rand = "0.8"
-yasna = "0.5"
-digest = "0.11.0-rc.4"
+
+[build-dependencies]
+vergen = "8"

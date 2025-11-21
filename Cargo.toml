@@ -1,6 +1,3 @@
 [workspace]
-resolver = "3"
-
-members = [
-    "uchat-apksigner"
-]
+resolver = "2"
+members = ["uchat-apksigner"]
