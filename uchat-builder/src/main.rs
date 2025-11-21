@@ -1,56 +1,47 @@
-use std::env;
-use std::path::PathBuf;
-use std::process::{Command, exit};
+use std::io::{self, Write};
+use std::process::Command;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    if args.len() < 2 {
-        eprintln!("Usage: uchat-builder <path-to-apk-project>");
-        exit(1);
+    loop {
+        println!("\n=== U-Chat Build Tools ===");
+        println!("1. Build zipalign");
+        println!("2. Build apksigner");
+        println!("3. Build full workspace (release)");
+        println!("4. Clean workspace");
+        println!("5. Exit");
+
+        print!("Choose an option: ");
+        io::stdout().flush().unwrap();
+
+        let mut choice = String::new();
+        io::stdin().read_line(&mut choice).unwrap();
+
+        match choice.trim() {
+            "1" => run("cargo build --release -p uchat-zipalign"),
+            "2" => run("cargo build --release -p uchat-apksigner"),
+            "3" => run("cargo build --release"),
+            "4" => run("cargo clean"),
+            "5" => {
+                println!("Goodbye.");
+                break;
+            }
+            _ => println!("Invalid option."),
+        }
     }
+}
 
-    let project_path = PathBuf::from(&args[1]);
-    let apk_target = project_path.join("target").join("aarch64-linux-android").join("release").join("apk").join("app.apk");
-
-    println!("[1] Building APK with cargo-apk...");
-    let build_status = Command::new("cargo")
-        .arg("apk")
-        .arg("build")
-        .arg("--release")
-        .current_dir(&project_path)
-        .status()
-        .expect("Failed to run cargo apk build");
-
-    if !build_status.success() {
-        eprintln!("APK build failed");
-        exit(1);
+fn run(cmd: &str) {
+    println!("\n> {}", cmd);
+    match Command::new("sh").arg("-c").arg(cmd).status() {
+        Ok(status) => {
+            if status.success() {
+                println!("✓ Done.");
+            } else {
+                println!("✗ Command exited with status: {:?}", status);
+            }
+        }
+        Err(err) => {
+            println!("✗ Failed to execute: {}", err);
+        }
     }
-
-    println!("[2] Aligning APK...");
-    let aligned_path = project_path.join("app-aligned.apk");
-    let align_status = Command::new("target/release/uchat-zipalign")
-        .arg(&apk_target)
-        .arg(&aligned_path)
-        .status()
-        .expect("Failed to run uchat-zipalign");
-
-    if !align_status.success() {
-        eprintln!("Zipalign failed");
-        exit(1);
-    }
-
-    println!("[3] Signing APK...");
-    let signed_path = project_path.join("app-signed.apk");
-    let sign_status = Command::new("target/release/uchat-apksigner")
-        .arg(&aligned_path)
-        .arg(&signed_path)
-        .status()
-        .expect("Failed to run uchat-apksigner");
-
-    if !sign_status.success() {
-        eprintln!("Signing failed");
-        exit(1);
-    }
-
-    println!("✅ APK built, aligned, and signed: {}", signed_path.display());
 }
