@@ -1,0 +1,22 @@
+# Ignore target build directory
+/target/
+
+# Ignore IDE/editor settings
+**/*.swp
+**/*.swo
+**/.vscode/
+**/.idea/
+
+# Ignore compiled binaries
+**/*.exe
+**/*.dll
+**/*.dylib
+**/*.so
+
+# Ignore byproducts from build tools
+**/*.log
+
+# Ignore private keys just in case
+*.key
+*.pem
+*.p12
