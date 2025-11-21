@@ -1,0 +1,12 @@
+[package]
+name = "uchat-apksigner"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+zip = "0.6"
+sha1 = "0.10"
+base64 = "0.21"
+rcgen = "0.11"
+pem = "2"
