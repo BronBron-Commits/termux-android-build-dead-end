@@ -1,0 +1,9 @@
+[package]
+name = "uchat-v1sig-assembler"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+uchat-v1sig = { path = "../uchat-v1sig" }
+zip = "0.6"

@@ -1,0 +1,10 @@
+[package]
+name = "uchat-signer-bin"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+uchat-v1sig = { path = "../uchat-v1sig" }
+uchat-v1sig-assembler = { path = "../uchat-v1sig-assembler" }
+uchat-v2sig = { path = "../uchat-v2sig" }

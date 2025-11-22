@@ -27,6 +27,12 @@ checksum = "a23eb6b1614318a8071c9b2521f36b424b2c83db5eb3a0fead4a6c0809af6e61"
 
 [[package]]
 name = "base64"
+version = "0.21.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9d297deb1925b89f2ccc13d7635fa0714f12c87adce1c75356b39ca9b7178567"
+
+[[package]]
+name = "base64"
 version = "0.22.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "72b3254f16251a8381aa12e40e3c4d2f0199f8c6508fbecb9d91f575e0fbb8c6"
@@ -465,7 +471,7 @@ name = "uchat-hybrid-signer"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "base64",
+ "base64 0.22.1",
  "ring",
  "sha2",
  "zip",
@@ -474,6 +480,45 @@ dependencies = [
 [[package]]
 name = "uchat-native"
 version = "0.1.0"
+
+[[package]]
+name = "uchat-signer-meta"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "uchat-v1sig",
+ "uchat-v1sig-assembler",
+ "uchat-v2sig",
+ "zip",
+]
+
+[[package]]
+name = "uchat-v1sig"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "base64 0.21.7",
+ "sha2",
+ "zip",
+]
+
+[[package]]
+name = "uchat-v1sig-assembler"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "uchat-v1sig",
+ "zip",
+]
+
+[[package]]
+name = "uchat-v2sig"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "base64 0.21.7",
+ "ring",
+]
 
 [[package]]
 name = "uchat-zipalign"

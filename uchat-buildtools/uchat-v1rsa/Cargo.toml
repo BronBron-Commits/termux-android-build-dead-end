@@ -1,0 +1,9 @@
+[package]
+name = "uchat-v1rsa"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+rsa = { version = "0.10.0-rc.10", features = ["pkcs1"] }
+sha2 = "0.10"

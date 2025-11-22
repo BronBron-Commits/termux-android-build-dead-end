@@ -1,8 +1,12 @@
 [workspace]
 members = [
-    "uchat-hybrid-signer",
     "uchat-apksigner",
-    "uchat-zipalign",
     "uchat-builder",
-    "uchat-native"
+    "uchat-hybrid-signer",
+    "uchat-native",
+    "uchat-zipalign",
+    "uchat-v1sig",
+    "uchat-v1sig-assembler",
+    "uchat-v2sig",
+    "uchat-signer-meta"
 ]
