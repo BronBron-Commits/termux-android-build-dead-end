@@ -430,6 +430,10 @@ name = "uchat-builder"
 version = "0.1.0"
 
 [[package]]
+name = "uchat-native"
+version = "0.1.0"
+
+[[package]]
 name = "uchat-zipalign"
 version = "0.1.0"
 dependencies = [

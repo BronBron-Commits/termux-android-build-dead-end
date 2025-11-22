@@ -2,5 +2,6 @@
 members = [
     "uchat-apksigner",
     "uchat-zipalign",
-    "uchat-builder"
+    "uchat-builder",
+    "uchat-native"
 ]
