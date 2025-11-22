@@ -1,55 +1,61 @@
-uchat build tools
+U-Chat Buildtools  
+A modular Rust framework for constructing, aligning, and signing Android APKs without relying on the traditional Android build stack.
 
-This workspace contains all native build utilities for the UChat platform.  
-Each tool is focused, minimal, and can be used independently.
+Overview  
+This workspace provides a complete toolchain for turning raw native artifacts into installable APKs. It supports v1 and v2 Android signature schemes, modular cryptographic backends, ZIP manipulation utilities, manifest editing, and standalone command-line tools.
 
-structure
-    uchat-native
-        Builds the Rust native library into libuchat_native.so for Android
-        Uses the standalone NDK toolchains directly
-        Produces an optimised no-std compatible shared library
+Design Goals  
+  Fully modular crates that can be combined or replaced  
+  Maximum compatibility with Android’s signing specifications  
+  Usable in Termux, Linux, WSL, and CI environments  
+  Zero reliance on Java or Android Studio  
+  Layered architecture enabling debug-friendly output  
+  Future-proof design for v3/v4 signature schemes
 
-    uchat-apksigner
-        Fast pure Rust APK signer
-        Generates META-INF block and RSA signature
-        Compatible with apksigner verify when manifest is kept intact
+Workspace Structure  
+  uchat-zip  
+    Low-level ZIP reader and writer utilities.
 
-    uchat-hybrid-signer
-        Full signing pipeline using ring for RSA PKCS1 SHA256
-        Loads PKCS8 private keys
-        Preserves all existing entries
-        Injects MANIFEST SF and RSA entries
+  uchat-zipfs  
+    High-level virtual file system over ZIP archives.
 
-    scripts
-        Utilities for packaging, zipalign, and automated release steps
+  uchat-manifest  
+    Reading, writing, and transforming AndroidManifest.xml.
 
-quick start
-    cd uchat-buildtools
+  uchat-rsa  
+    PKCS1/PKCS8 RSA utilities for legacy signing and compatibility.
+
+  uchat-v1sig  
+    Creates Android v1 signature structures:  
+      MANIFEST.MF  
+      CERT.SF  
+      CERT.RSA
+
+  uchat-v1sig-assembler  
+    Assembles all v1 signature layers and injects them into APKs.
+
+  uchat-v2sig  
+    Implements Android v2 signature blocks, digests, and signer entries.
+
+  uchat-signer-meta  
+    Unified controller for loading keys and selecting v1/v2 strategies.
+
+  uchat-signer-bin  
+    CLI interface for signing operations:  
+      uchat-signer <key> <input.apk> <output.apk>
+
+  uchat-zipalign  
+    Aligns ZIP entries to 4-byte boundaries for Android installation.
+
+Usage  
+  Build the entire toolchain:  
     cargo build --release
 
-build native library
-    cd uchat-native
-    cargo build --release
-    output in target/release/libuchat_native.so
+  Sign an APK using the meta signer:  
+    ./target/release/uchat-signer <key.pem> <unsigned.apk> <signed.apk>
 
-sign an apk using hybrid signer
-    cd uchat-buildtools
-    ./target/release/uchat-hybrid-signer \
-        path/to/key.pem \
-        path/to/input.apk \
-        path/to/output.apk
-
-expected output layout
-    META-INF/MANIFEST.MF
-    META-INF/CERT.SF
-    META-INF/CERT.RSA
-    classes.dex
-    lib/<abi>/libuchat_native.so
-    resources.arsc
-    AndroidManifest.xml
-
-goals
-    simple reproducible builds
-    native Android pipeline without cargo-apk
-    deterministic signatures
-    fully controlled apk structure
+Notes  
+  All crates are intentionally decoupled.  
+  Any component can be replaced with user-defined implementations.  
+  Designed for developers building custom Android pipelines, Rust-native apps,
+  reproducible APK systems, or bare-metal Termux Android toolchains.
