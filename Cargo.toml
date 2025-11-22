@@ -1,5 +1,6 @@
 [workspace]
 members = [
+    "uchat-hybrid-signer",
     "uchat-apksigner",
     "uchat-zipalign",
     "uchat-builder",
